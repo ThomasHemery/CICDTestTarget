@@ -6,10 +6,6 @@ version: 2.1
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   say-hello:
-    filters: 
-      tags:
-        only: 
-          - /^v.*/
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
@@ -27,4 +23,8 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - say-hello:
+          filters: 
+            tags:
+              only: 
+                - /^v.*/
