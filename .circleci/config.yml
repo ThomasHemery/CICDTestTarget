@@ -17,6 +17,14 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  leave-comment:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Leave comment"
+          command: "echo This should be leaving a comment..."
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -24,10 +32,17 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello:
-          filters: 
+          filters:
             tags:
-              only: 
+              only:
                 - /^v.*/
-            branches: 
+            branches:
               ignore:
-                - /.*/ 
+                - /.*/
+      - wait-for-approval:
+          type: approval
+          requires:
+            - say-hello
+      - leave-comment:
+          requires:
+            - wait-for-approval
