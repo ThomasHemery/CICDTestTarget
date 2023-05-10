@@ -31,14 +31,7 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello:
-          filters:
-            tags:
-              only:
-                - /^v.*/
-            branches:
-              ignore:
-                - /.*/
+      - say-hello
       - wait-for-approval:
           type: approval
           requires:
