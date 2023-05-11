@@ -27,8 +27,8 @@ workflows:
 
 jobs:
   build:
-    docker: # Use the Docker executor for the build job
-      - image: <image-name-and-tag> # Specify the Docker image to use for the build job
+    docker:
+      - image: cimg/base:stable
     steps:
       - checkout
       - setup_remote_docker
@@ -40,6 +40,10 @@ jobs:
             pip install \
               docker-compose==1.12.0 \
               awscli==1.11.76
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t app .
   release-dev:
     docker:
       - image: cimg/base:stable
