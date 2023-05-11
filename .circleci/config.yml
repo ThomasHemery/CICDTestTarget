@@ -1,17 +1,9 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   build:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
       - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
       - run:
@@ -33,6 +25,22 @@ jobs:
       - run:
           name: "deploy-dev"
           command: "echo This should be deploying to DEV"
+  release-qct:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "release-dev"
+          command: "echo This should be releasing to DEV"
+  deploy-qct:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "deploy-dev"
+          command: "echo This should be deploying to DEV"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -40,7 +48,9 @@ workflows:
   build-release-deploy:
     jobs:
       - build
-      - release-dev
+      - release-dev:
+          requires:
+            - build
       - approve-deploy-dev:
           type: approval
           requires:
@@ -48,3 +58,13 @@ workflows:
       - deploy-dev:
           requires:
             - approve-deploy-dev
+      - release-qct:
+          requires:
+            - build
+      - approve-deploy-qct:
+          type: approval
+          requires:
+            - release-qct
+      - deploy-qct:
+          requires:
+            - approve-deploy-qct
