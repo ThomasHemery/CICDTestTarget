@@ -1,14 +1,45 @@
 version: 2.1
 
+workflows:
+  build-release-deploy:
+    jobs:
+      - build
+      - release-dev:
+          requires:
+            - build
+      - approve-deploy-dev:
+          type: approval
+          requires:
+            - release-dev
+      - deploy-dev:
+          requires:
+            - approve-deploy-dev
+      - release-qct:
+          requires:
+            - build
+      - approve-deploy-qct:
+          type: approval
+          requires:
+            - release-qct
+      - deploy-qct:
+          requires:
+            - approve-deploy-qct
+
 jobs:
   build:
-    docker:
-      - image: cimg/base:stable
+    docker: # Use the Docker executor for the build job
+      - image: <image-name-and-tag> # Specify the Docker image to use for the build job
     steps:
       - checkout
+      - setup_remote_docker
       - run:
-          name: "build"
-          command: "echo This should be building the project"
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
   release-dev:
     docker:
       - image: cimg/base:stable
@@ -41,30 +72,3 @@ jobs:
       - run:
           name: "deploy-dev"
           command: "echo This should be deploying to DEV"
-
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
-workflows:
-  build-release-deploy:
-    jobs:
-      - build
-      - release-dev:
-          requires:
-            - build
-      - approve-deploy-dev:
-          type: approval
-          requires:
-            - release-dev
-      - deploy-dev:
-          requires:
-            - approve-deploy-dev
-      - release-qct:
-          requires:
-            - build
-      - approve-deploy-qct:
-          type: approval
-          requires:
-            - release-qct
-      - deploy-qct:
-          requires:
-            - approve-deploy-qct
