@@ -8,7 +8,7 @@ workflows:
   build-release-deploy:
     jobs:
       - build
-      - aws-login
+      - s3-create-bucket
       - release-dev:
           requires:
             - build
@@ -16,7 +16,7 @@ workflows:
           type: approval
           requires:
             - release-dev
-            - aws-login
+            - s3-create-bucket
       - deploy-dev:
           requires:
             - approve-deploy-dev
@@ -27,13 +27,13 @@ workflows:
           type: approval
           requires:
             - release-qct
-            - aws-login
+            - s3-create-bucket
       - deploy-qct:
           requires:
             - approve-deploy-qct
 
 jobs:
-  aws-login:
+  s3-create-bucket:
    docker:
      - image: cimg/aws:2022.06
    steps:
@@ -48,7 +48,7 @@ jobs:
      - run:
          name: Create-Test-Bucket
          command: |     
-           aws s3 mb s3://circle-ci-test-bucket
+           aws s3 mb s3://tom-circle-ci-test-bucket-01
   build:
     docker:
       - image: cimg/base:stable
