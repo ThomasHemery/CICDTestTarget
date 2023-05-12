@@ -46,9 +46,9 @@ jobs:
          profile-name: "CircleCI-CodeDeploy"
          role-session-name: "TestCircleSession"
      - run:
-         name: Log-into-AWS-ECR
+         name: Create-Test-Bucket
          command: |     
-           aws ecr get-login-password --profile "CircleCI-CodeDeploy"
+           aws s3 mb s3://CircleCi-Test-Bucket
   build:
     docker:
       - image: cimg/base:stable
