@@ -48,7 +48,7 @@ jobs:
      - run:
          name: Create-Test-Bucket
          command: |     
-           aws s3 mb s3://CircleCi-Test-Bucket
+           aws s3 mb s3://circle-ci-test-bucket
   build:
     docker:
       - image: cimg/base:stable
