@@ -41,7 +41,7 @@ jobs:
      # run the aws-cli/setup command from the orb
      - aws-cli/setup:
          role-arn: 'arn:aws:iam::593662600218:role/Circle-CI-Code-Deploy'
-         aws-region: "eu-west-1"
+         aws-region: AWS_ACCOUNT_REGION
          # optional parameters
          profile-name: "CircleCI-CodeDeploy"
          role-session-name: "TestCircleSession"
