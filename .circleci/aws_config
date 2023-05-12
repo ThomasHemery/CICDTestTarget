@@ -2,5 +2,5 @@
 region = us-east-1
 output = json
 [profile dev]
-role_arn = arn:aws:iam::593662600218:role/CircleCi-role
+role_arn = arn:aws:iam::593662600218:role/Circle-CI-Code-Deploy
 source_profile = default
