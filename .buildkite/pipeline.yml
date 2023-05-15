@@ -1,30 +1,6 @@
 steps:
-  - label: "Build"
-    command: "echo build"
-    key: "build"
-
-  - label: "Release DEV"
-    command: "echo DEV release"
-    depends_on: "build"
-    key: "dev_release"
-
-  - label: "Release QCT"
-    command: "echo QCT release"
-    depends_on: "build"
-    key: "qct_release"
-
-  - block: "Deploy to DEV?"
-    key: "dev_approval"
-    depends_on: "dev_release"
-
-  - label: "Deploy DEV"
-    command: "echo DEV deploy"
-    depends_on: "dev_approval"
-
-  - block: "Deploy to QCT?"
-    key: "qct_approval"
-    depends_on: "qct_release"
-
-  - label: "Deploy QCT"
-    command: "echo QCT deploy"
-    depends_on: "qct_approval"
+  - label: ":pipeline: Get Build Pipeline"
+    command: buildkite-agent pipeline upload .buildkite/build.yml
+  - wait
+  - label: ":pipeline: Get release pipeline"
+    command: buildkite-agent pipeline upload .buildkite/release.yml
