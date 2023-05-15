@@ -2,5 +2,8 @@ steps:
   - label: ":pipeline: Get Build Pipeline"
     command: buildkite-agent pipeline upload .buildkite/build.yml
   - wait
+  - label: ":pipeline: Run Test Pipeline"
+    trigger: test-reusable-pipeline
+  - wait
   - label: ":pipeline: Get release pipeline"
     command: buildkite-agent pipeline upload .buildkite/release.yml

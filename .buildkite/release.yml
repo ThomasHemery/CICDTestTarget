@@ -1,12 +1,16 @@
 steps:
   - label: "Release DEV"
     command: "echo DEV release"
-    depends_on: "build"
+    depends_on:
+      - "build"
+      - "test"
     key: "dev_release"
 
   - label: "Release QCT"
     command: "echo QCT release"
-    depends_on: "build"
+    depends_on:
+      - "build"
+      - "test"
     key: "qct_release"
 
   - block: "Deploy to DEV?"
