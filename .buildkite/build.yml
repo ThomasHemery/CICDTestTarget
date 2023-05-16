@@ -1,4 +1,4 @@
 steps:
   - label: "Build"
     command: "docker build ."
-    key: "build"gi
+    key: "build"
