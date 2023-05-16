@@ -1,6 +1,6 @@
 steps:
   - label: "Release DEV"
-    command: "docker images"
+    command: "docker tag test_build 593662600218.dkr.ecr.eu-west-1.amazonaws.com/buildKiteTest:test"
     plugins:
       - ecr#v2.7.0:
           login: true
