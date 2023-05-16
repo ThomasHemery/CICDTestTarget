@@ -1,4 +1,4 @@
 steps:
   - label: "Build"
-    command: "DOCKER_BUILDKIT=1 docker build --output type=tar,dest=out.tar . && ls -lah && buildkite-agent artifact upload out.tar"
+    command: "docker build --tag=test_build ."
     key: "build"

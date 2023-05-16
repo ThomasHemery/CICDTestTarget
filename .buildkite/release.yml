@@ -1,6 +1,6 @@
 steps:
   - label: "Release DEV"
-    command: "echo DEV release"
+    command: "docker images"
     plugins:
       - ecr#v2.7.0:
           login: true
