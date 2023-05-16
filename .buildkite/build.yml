@@ -1,4 +1,4 @@
 steps:
   - label: "Build"
-    command: "echo build"
-    key: "build"
+    command: "docker build ."
+    key: "build"gi
