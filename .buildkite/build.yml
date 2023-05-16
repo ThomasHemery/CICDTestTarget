@@ -1,6 +1,4 @@
 steps:
   - label: "Build"
-    command: "docker build --output type=tar,dest=out.tar ."
-  - label: "Upload Built Container"
-    command: "buildkite-agent artifact upload out.tar"
+    command: "docker build --output type=tar,dest=out.tar . && buildkite-agent artifact upload out.tar"
     key: "build"
