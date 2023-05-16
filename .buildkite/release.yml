@@ -1,6 +1,9 @@
 steps:
   - label: "Release DEV"
     command: "echo DEV release"
+    plugins:
+      - ecr#v2.7.0:
+          login: true
     depends_on:
       - "build"
     key: "dev_release"
