@@ -1,4 +1,5 @@
 steps:
+  - checkout
   - trigger: build-docker
   - wait
   - trigger: test
