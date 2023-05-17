@@ -1,9 +1,10 @@
 steps:
-  - label: ":pipeline: Get Build Pipeline"
-    command: buildkite-agent pipeline upload .buildkite/build.yml
+  - trigger: build-docker
   - wait
-  - label: ":pipeline: Run Test Pipeline"
-    trigger: test-reusable-pipeline
+  - trigger: test
   - wait
-  - label: ":pipeline: Get release pipeline"
-    command: buildkite-agent pipeline upload .buildkite/release.yml
+  - trigger: release-staging
+  - trigger: release-live
+  - wait
+  - trigger: deploy-staging
+  - trigger: deploy-live
