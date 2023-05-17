@@ -1,4 +1,6 @@
 steps:
+  - command: "git remote -v"
+  - command: "ls -lah"
   - trigger: build-docker
   - wait
   - trigger: test
