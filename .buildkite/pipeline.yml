@@ -1,7 +1,10 @@
 steps:
   - trigger: build-docker
+  - wait
   - trigger: test
+  - wait
   - trigger: release-staging
   - trigger: release-live
+  - wait
   - trigger: deploy-staging
   - trigger: deploy-live
