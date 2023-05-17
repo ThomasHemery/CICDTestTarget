@@ -1,7 +1,7 @@
 steps:
-  - command: "git clone git@github.com:ThomasHemery/BuildKiteCI.git"
+  - command: "git clone git@github.com:ThomasHemery/BuildKiteCI.git build-kite"
   - command: "ls -lah"
-  - command:  buildkite-agent pipeline upload ./BuildKiteCI/.buildkite/build/build-docker.yml
+  - command:  buildkite-agent pipeline upload ./build-kite/.buildkite/build/build-docker.yml
   - wait
   - trigger: test
   - wait
