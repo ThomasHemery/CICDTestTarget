@@ -2,7 +2,7 @@ steps:
   - command: "git remote -v"
   - command: "ls -lah"
   - command: "pwd"
-  - trigger: build-docker
+  - command:  buildkite-agent pipeline upload git@github.com:ThomasHemery/BuildKiteCI.git/.buildkite/build/build-docker.yml
   - wait
   - trigger: test
   - wait
