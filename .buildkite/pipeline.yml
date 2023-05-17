@@ -1,8 +1,6 @@
 steps:
-  - command: "git remote -v"
-  - command: "ls -lah"
-  - command: "pwd"
-  - command:  buildkite-agent pipeline upload git@github.com:ThomasHemery/BuildKiteCI.git/.buildkite/build/build-docker.yml
+  - command: "git clone git@github.com:ThomasHemery/BuildKiteCI.git"
+  - command:  buildkite-agent pipeline upload BuildKiteCI/.buildkite/build/build-docker.yml
   - wait
   - trigger: test
   - wait
