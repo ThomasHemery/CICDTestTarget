@@ -1,94 +1,10 @@
 version: 2.1
 
 orbs:
- # import CircleCI's aws-cli orb
- aws-cli: circleci/aws-cli@3.1
- test-job: thomas-hemery/circle-ci-test-orbs@0.0.1
+ test-job: thomas-hemery/circle-ci-test-orbs@0.0.3
 
 workflows:
   build-release-deploy:
     jobs:
-      - build
-      - s3-create-bucket
-      - release-dev:
-          requires:
-            - build
-      - approve-deploy-dev:
-          type: approval
-          requires:
-            - release-dev
-            - s3-create-bucket
-      - deploy-dev:
-          requires:
-            - approve-deploy-dev
-      - release-qct:
-          requires:
-            - build
-      - approve-deploy-qct:
-          type: approval
-          requires:
-            - release-qct
-            - s3-create-bucket
-      - deploy-qct:
-          requires:
-            - approve-deploy-qct
-
-jobs:
-  s3-create-bucket:
-   docker:
-     - image: cimg/aws:2022.06
-   steps:
-     - checkout
-     # run the aws-cli/setup command from the orb
-     - aws-cli/setup:
-         role-arn: 'arn:aws:iam::593662600218:role/Circle-CI-Code-Deploy'
-         aws-region: AWS_ACCOUNT_REGION
-         # optional parameters
-         profile-name: "CircleCI-CodeDeploy"
-         role-session-name: "TestCircleSession"
-     - run:
-         name: Create-Test-Bucket
-         command: |     
-           aws s3 mb s3://tom-circle-ci-test-bucket-01
-  build:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build application Docker image
-          command: |
-            docker build -t app .
-  release-dev:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "release-dev"
-          command: "echo This should be releasing to DEV"
-  deploy-dev:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "deploy-dev"
-          command: "echo This should be deploying to DEV"
-  release-qct:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "release-dev"
-          command: "echo This should be releasing to DEV"
-  deploy-qct:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "deploy-dev"
-          command: "echo This should be deploying to DEV"
+      - test-job/build
+      - test-job/test
