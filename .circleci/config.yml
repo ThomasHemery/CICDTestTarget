@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
- test-job: thomas-hemery/circle-ci-test-orbs@main
+ test-job: thomas-hemery/circle-ci-test-orbs@0.0.4
 
 workflows:
   build-release-deploy:
