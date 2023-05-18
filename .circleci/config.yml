@@ -3,7 +3,7 @@ version: 2.1
 orbs:
  # import CircleCI's aws-cli orb
  aws-cli: circleci/aws-cli@3.1
- test-job: thomas-hemery/circle-ci-test-orbs@v0.0.1
+ test-job: thomas-hemery/circle-ci-test-orbs@0.0.1
 
 workflows:
   build-release-deploy:
